@@ -1,11 +1,5 @@
-import Counter from "./components/Counter/Counter";
-
 function App() {
-  return (
-    <div data-testId="app">
-      <Counter />
-    </div>
-  );
+  return <div data-testId="app">Nothing</div>;
 }
 
 export default App;
