@@ -3,13 +3,13 @@ export interface GuessWordsProps {
 }
 const GuessWords = ({ guessWords }: GuessWordsProps) => {
   return (
-    <div data-testId="guess-words">
+    <div data-testid="guess-words">
       {guessWords.length > 0 ? (
-        <div data-testId="guess-words-list">
+        <div data-testid="guess-words-list">
           {guessWords.map((word, index) => (
             <div
               key={index}
-              data-testId="guess-word"
+              data-testid="guess-word"
               style={{
                 width: 500,
                 display: "flex",
@@ -22,7 +22,7 @@ const GuessWords = ({ guessWords }: GuessWordsProps) => {
           ))}
         </div>
       ) : (
-        <div data-testId="guess-word-instruction">
+        <div data-testid="guess-word-instruction">
           Try to guess secret word!
         </div>
       )}

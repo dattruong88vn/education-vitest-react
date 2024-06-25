@@ -4,7 +4,7 @@ interface CongratsProps {
 
 const Congrats = ({ success }: CongratsProps) => {
   return (
-    <div data-testId="congrats">{success ? "You guessed correctly!" : ""}</div>
+    <div data-testid="congrats">{success ? "You guessed correctly!" : ""}</div>
   );
 };
 
