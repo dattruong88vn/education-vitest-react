@@ -39,10 +39,6 @@ describe("Input Component", () => {
         const submitButton = screen.queryByTestId("submit-button");
         expect(submitButton).toBeInTheDocument();
       });
-      test("not render congrat element", () => {
-        const congrats = screen.queryByTestId("congrats");
-        expect(congrats).not.toBeInTheDocument();
-      });
     });
 
     describe("success is true", () => {
@@ -55,10 +51,6 @@ describe("Input Component", () => {
       test("not render input section", () => {
         const inputSection = screen.queryByTestId("input-section");
         expect(inputSection).not.toBeInTheDocument();
-      });
-      test("render congrat element", () => {
-        const congrats = screen.queryByTestId("congrats");
-        expect(congrats).toBeInTheDocument();
       });
     });
   });

@@ -15,7 +15,7 @@ const Input = ({ onSubmit, secretWord, success }: InputProps) => {
   };
 
   if (success) {
-    return <div data-testid="congrats">You guessed correctly!</div>;
+    return null;
   }
 
   return (

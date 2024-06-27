@@ -1,5 +1,7 @@
+export type GuessWordType = { guessWord: string; letterMatchCount: number };
+
 export interface GuessWordsProps {
-  guessWords: { guessWord: string; letterMatchCount: number }[];
+  guessWords: GuessWordType[];
 }
 const GuessWords = ({ guessWords }: GuessWordsProps) => {
   return (
