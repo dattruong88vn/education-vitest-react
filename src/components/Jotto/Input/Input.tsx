@@ -2,11 +2,10 @@ import React from "react";
 
 export interface InputProps {
   onSubmit: (value: string) => void;
-  secretWord: string;
   success: boolean;
 }
 
-const Input = ({ onSubmit, secretWord, success }: InputProps) => {
+const Input = ({ onSubmit, success }: InputProps) => {
   const [currentGuess, setCurrentGuess] = React.useState("");
 
   const handleSubmit = () => {

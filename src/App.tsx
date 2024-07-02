@@ -36,11 +36,7 @@ function App() {
   return (
     <div data-testid="app" style={{ width: "100%", height: "100%" }}>
       <h1>Jotto Chalenge</h1>
-      <Input
-        success={success}
-        secretWord={secretWord}
-        onSubmit={handleSubmitGuessWord}
-      />
+      <Input success={success} onSubmit={handleSubmitGuessWord} />
       <Congrats success={success} />
       <GuessWords guessWords={guessWords} />
     </div>
