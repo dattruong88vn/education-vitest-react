@@ -1,22 +1,31 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Congrats from "./components/Jotto/Congrats/Congrats";
 import GuessWords, {
   GuessWordType,
 } from "./components/Jotto/GuessWords/GuessWords";
 import Input from "./components/Jotto/Input/Input";
 import { getLetterMatchCount } from "./helpers";
+import { getSecretWord } from "./actions";
 
 function App() {
-  const SECRET_WORD = "party";
   const [guessWords, setGuessWords] = useState<GuessWordType[]>([]);
   const [success, setSuccess] = useState(false);
+  const [secretWord, setSecretWord] = useState<string>("party");
+
+  useEffect(() => {
+    const getWord = async () => {
+      const word = await getSecretWord();
+      setSecretWord(word);
+    };
+    getWord();
+  }, []);
 
   const handleSubmitGuessWord = (value: string) => {
-    if (value === SECRET_WORD) {
+    if (value === secretWord) {
       setSuccess(true);
     }
 
-    const letterMatchCount = getLetterMatchCount(SECRET_WORD, value);
+    const letterMatchCount = getLetterMatchCount(secretWord, value);
     const data = {
       guessWord: value,
       letterMatchCount,
@@ -29,7 +38,7 @@ function App() {
       <h1>Jotto Chalenge</h1>
       <Input
         success={success}
-        secretWord={SECRET_WORD}
+        secretWord={secretWord}
         onSubmit={handleSubmitGuessWord}
       />
       <Congrats success={success} />

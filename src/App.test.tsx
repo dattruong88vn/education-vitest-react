@@ -1,6 +1,11 @@
-import { screen, render, fireEvent, waitFor } from "@testing-library/react";
-import { test, describe } from "vitest";
+import { screen, render, fireEvent } from "@testing-library/react";
+import { test, describe, vi } from "vitest";
 import App from "./App";
+import { getSecretWord } from "./actions";
+
+// Mock myAsyncFunction globally
+// if thera is __mock__ folder, it will be used
+vi.mock("./actions");
 
 const setup = () => render(<App />);
 
@@ -16,7 +21,7 @@ describe("App", () => {
 });
 
 const setupFunctional = () => {
-  render(<App />);
+  return render(<App />);
 };
 
 describe("App Functionality", () => {
@@ -89,6 +94,28 @@ describe("App Functionality", () => {
         "congrats"
       ) as HTMLDivElement;
       expect(congratsComponent.textContent).not.toHaveLength(0);
+    });
+  });
+
+  describe("fetch secret word correctly", () => {
+    beforeEach(() => {
+      vi.clearAllMocks();
+    });
+
+    test("get secret word", async () => {
+      const secretWord = await getSecretWord();
+      expect(secretWord).toBe("party");
+    });
+
+    test("get secret word runs on app mount", () => {
+      setupFunctional();
+      expect(getSecretWord).toHaveBeenCalledTimes(1);
+    });
+
+    test("get secret word does not run on app update", () => {
+      const { rerender } = setupFunctional();
+      rerender(<App />);
+      expect(getSecretWord).toHaveBeenCalledTimes(1);
     });
   });
 });
