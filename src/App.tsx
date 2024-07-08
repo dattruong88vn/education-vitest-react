@@ -1,4 +1,4 @@
-import { useEffect, useReducer } from "react";
+import React, { useEffect, useReducer } from "react";
 import Congrats from "./components/Jotto/Congrats/Congrats";
 import GuessWords, {
   GuessWordType,
@@ -8,7 +8,7 @@ import { getLetterMatchCount } from "./helpers";
 import { getSecretWord } from "./actions";
 
 interface State {
-  secretWord: string;
+  secretWord: string | null;
   guessWords: GuessWordType[];
   success: boolean;
 }
@@ -25,7 +25,7 @@ type Action =
   | { type: ActionType.SET_SUCCESS; payload: boolean };
 
 const initialState: State = {
-  secretWord: "",
+  secretWord: null,
   guessWords: [],
   success: false,
 };
@@ -44,10 +44,9 @@ const reducer = (state: State, action: Action) => {
 };
 
 function App() {
-  const [state, dispatch] = useReducer<(state: State, action: Action) => State>(
-    reducer,
-    initialState
-  );
+  const [state, dispatch] = React.useReducer<
+    (state: State, action: Action) => State
+  >(reducer, initialState);
 
   useEffect(() => {
     const getWord = async () => {
@@ -62,6 +61,8 @@ function App() {
       dispatch({ type: ActionType.SET_SUCCESS, payload: true });
     }
 
+    if (!state.secretWord) return;
+
     const letterMatchCount = getLetterMatchCount(state.secretWord, value);
     const data = {
       guessWord: value,
@@ -74,8 +75,13 @@ function App() {
     });
   };
 
+  if (state.secretWord === null) {
+    return <div data-testid="spinner">Loading...</div>;
+  }
+
   return (
     <div data-testid="app" style={{ width: "100%", height: "100%" }}>
+      <div>{state.secretWord}</div>
       <h1>Jotto Chalenge</h1>
       <Input success={state.success} onSubmit={handleSubmitGuessWord} />
       <Congrats success={state.success} />

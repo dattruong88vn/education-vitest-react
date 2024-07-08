@@ -1,4 +1,10 @@
-import { screen, render, fireEvent } from "@testing-library/react";
+import {
+  screen,
+  render,
+  fireEvent,
+  cleanup,
+  act,
+} from "@testing-library/react";
 import { test, describe, vi } from "vitest";
 import App from "./App";
 import { getSecretWord } from "./actions";
@@ -9,29 +15,43 @@ vi.mock("./actions");
 
 const setup = () => render(<App />);
 
-describe("App", () => {
-  beforeEach(() => {
-    setup();
-  });
+const setupAndWaitForGettingSecretWordFinish = async () => {
+  setup();
+  await act(async () => {});
+};
 
-  test("render without error", () => {
-    const app = screen.queryAllByTestId("app");
-    expect(app).toHaveLength(1);
+describe("App render", () => {
+  describe("render without error", () => {
+    afterEach(() => {
+      cleanup();
+    });
+
+    test("render spinner when secretWord is null", () => {
+      setup();
+      const spinner = screen.queryByTestId("spinner");
+      expect(spinner).toBeInTheDocument();
+    });
+
+    test("render app when secretWord is not null", async () => {
+      await setupAndWaitForGettingSecretWordFinish();
+      const app = screen.queryAllByTestId("app");
+      expect(app).toHaveLength(1);
+    });
   });
 });
-
-const setupFunctional = () => {
-  return render(<App />);
-};
 
 describe("App Functionality", () => {
   let inputField: HTMLInputElement;
   let submitBtn: HTMLButtonElement;
 
-  beforeEach(() => {
-    setupFunctional();
+  beforeEach(async () => {
+    await setupAndWaitForGettingSecretWordFinish();
     inputField = screen.getByTestId("input-field") as HTMLInputElement;
     submitBtn = screen.getByTestId("submit-button") as HTMLButtonElement;
+  });
+
+  afterEach(() => {
+    cleanup();
   });
 
   const guessWordAction = (words: string[]) => {
@@ -108,12 +128,12 @@ describe("App Functionality", () => {
     });
 
     test("get secret word runs on app mount", () => {
-      setupFunctional();
+      setup();
       expect(getSecretWord).toHaveBeenCalledTimes(1);
     });
 
     test("get secret word does not run on app update", () => {
-      const { rerender } = setupFunctional();
+      const { rerender } = setup();
       rerender(<App />);
       expect(getSecretWord).toHaveBeenCalledTimes(1);
     });
