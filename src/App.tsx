@@ -1,4 +1,4 @@
-import React, { useEffect, useReducer } from "react";
+import React, { useEffect } from "react";
 import Congrats from "./components/Jotto/Congrats/Congrats";
 import GuessWords, {
   GuessWordType,

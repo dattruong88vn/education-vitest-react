@@ -1,3 +1,4 @@
+import React from "react";
 import {
   screen,
   render,
@@ -34,6 +35,26 @@ describe("App render", () => {
 
     test("render app when secretWord is not null", async () => {
       await setupAndWaitForGettingSecretWordFinish();
+      const app = screen.queryAllByTestId("app");
+      expect(app).toHaveLength(1);
+    });
+
+    test("render spinner when secretWord is not null mock useReducer", () => {
+      vi.spyOn(React, "useReducer").mockImplementationOnce(() => [
+        { secretWord: null, success: false, guessWords: [] },
+        () => {},
+      ]);
+      setup();
+      const spinner = screen.queryByTestId("spinner");
+      expect(spinner).toBeInTheDocument();
+    });
+
+    test("render app when secretWord is not null and mock useReducer", () => {
+      vi.spyOn(React, "useReducer").mockImplementationOnce(() => [
+        { secretWord: "party", success: false, guessWords: [] },
+        () => {},
+      ]);
+      setup();
       const app = screen.queryAllByTestId("app");
       expect(app).toHaveLength(1);
     });
