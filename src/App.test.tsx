@@ -47,6 +47,8 @@ describe("App render", () => {
       setup();
       const spinner = screen.queryByTestId("spinner");
       expect(spinner).toBeInTheDocument();
+      const app = screen.queryByTestId("app");
+      expect(app).not.toBeInTheDocument();
     });
 
     test("render app when secretWord is not null and mock useReducer", () => {
@@ -55,8 +57,10 @@ describe("App render", () => {
         () => {},
       ]);
       setup();
-      const app = screen.queryAllByTestId("app");
-      expect(app).toHaveLength(1);
+      const spinner = screen.queryByTestId("spinner");
+      expect(spinner).not.toBeInTheDocument();
+      const app = screen.queryByTestId("app");
+      expect(app).toBeInTheDocument();
     });
   });
 });
