@@ -6,6 +6,8 @@ import GuessWords, {
 import Input from "./components/Jotto/Input/Input";
 import { getLetterMatchCount } from "./helpers";
 import { getSecretWord } from "./actions";
+import { ThemeProvider } from "./context/themeContext";
+import ThemePicker from "./components/Theme";
 
 interface State {
   secretWord: string | null;
@@ -83,9 +85,12 @@ function App() {
     <div data-testid="app" style={{ width: "100%", height: "100%" }}>
       <div>{state.secretWord}</div>
       <h1>Jotto Chalenge</h1>
-      <Input success={state.success} onSubmit={handleSubmitGuessWord} />
-      <Congrats success={state.success} />
-      <GuessWords guessWords={state.guessWords} />
+      <ThemeProvider>
+        <ThemePicker />
+        <Input success={state.success} onSubmit={handleSubmitGuessWord} />
+        <Congrats success={state.success} />
+        <GuessWords guessWords={state.guessWords} />
+      </ThemeProvider>
     </div>
   );
 }
