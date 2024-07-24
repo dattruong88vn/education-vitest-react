@@ -1,12 +1,11 @@
-import React from "react";
-import ThemeContext from "../../../context/themeContext";
+import { useThemeCtx } from "../../../context/themeContext";
 
 interface CongratsProps {
   success: boolean;
 }
 
 const Congrats = ({ success }: CongratsProps) => {
-  const { theme } = React.useContext(ThemeContext);
+  const { theme } = useThemeCtx();
   return (
     <div
       data-testid="congrats"

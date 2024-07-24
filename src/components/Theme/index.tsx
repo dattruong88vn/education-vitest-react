@@ -1,9 +1,8 @@
-import { useContext } from "react";
-import ThemeContext from "../../context/themeContext";
+import { useThemeCtx } from "../../context/themeContext";
 import { THEME_LIST } from "../../constants";
 
 const ThemePicker = () => {
-  const { setTheme } = useContext(ThemeContext);
+  const { setTheme } = useThemeCtx();
 
   return (
     <div data-testid="theme-picker">

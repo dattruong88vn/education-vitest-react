@@ -17,6 +17,14 @@ const ThemeProvider = ({ children }: React.PropsWithChildren) => {
   );
 };
 
-export { ThemeProvider };
+const useThemeCtx = () => {
+  const context = React.useContext(ThemeContext);
+  if (context === undefined) {
+    throw new Error("useThemeCtx must be used within a ThemeProvider");
+  }
+  return context;
+};
+
+export { ThemeProvider, useThemeCtx };
 
 export default ThemeContext;
